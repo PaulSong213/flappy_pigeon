@@ -1,7 +1,9 @@
+import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
-import 'package:flutter_learn/components/menu/menu_page.dart';
+import 'package:flutter_learn/screens/game_platform/game_platform_screen.dart';
+import 'package:flutter_learn/screens/menu/menu_screen.dart';
 
-class MainGame extends FlameGame {
+class MainGame extends FlameGame with HasTappableComponents {
   late final RouterComponent router;
 
   @override
@@ -10,7 +12,8 @@ class MainGame extends FlameGame {
       router = RouterComponent(
         initialRoute: 'menu',
         routes: {
-          'menu': Route(MenuPage.new),
+          'menu': Route(MenuScreen.new),
+          'game-platform': Route(GamePlatformScreen.new),
         },
       ),
     );
