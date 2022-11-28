@@ -12,8 +12,8 @@ class MainGame extends FlameGame with HasTappableComponents {
       router = RouterComponent(
         initialRoute: 'menu',
         routes: {
-          'menu': Route(MenuScreen.new),
-          'game-platform': Route(GamePlatformScreen.new),
+          MenuScreen.routeName: Route(MenuScreen.new),
+          GamePlatformScreen.routeName: Route(GamePlatformScreen.new),
         },
       ),
     );

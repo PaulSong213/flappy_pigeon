@@ -10,13 +10,12 @@ class GamePlatformBackground extends Component {
   @override
   Future<void>? onLoad() async {
     await Flame.images.load(backgroundFileName);
-
     return super.onLoad();
   }
 
   @override
   void render(Canvas canvas) async {
-    canvas.drawImage(Flame.images.fromCache(backgroundFileName),
-        const Offset(-10, -10), _backgroundPaint);
+    Image img = Flame.images.fromCache(backgroundFileName);
+    canvas.drawImage(img, const Offset(-10, -10), _backgroundPaint);
   }
 }
