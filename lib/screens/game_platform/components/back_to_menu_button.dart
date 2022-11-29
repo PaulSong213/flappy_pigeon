@@ -4,7 +4,7 @@ import 'package:flame/flame.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_learn/screens/menu/menu_screen.dart';
 
-import '../../../main_game.dart';
+import '../../../game/main_game.dart';
 
 class BackToMenu extends SpriteComponent
     with TapCallbacks, HasGameRef<MainGame> {

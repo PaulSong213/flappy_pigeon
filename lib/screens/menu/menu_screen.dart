@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:flutter_learn/main_game.dart';
 import 'package:flutter_learn/screens/game_platform/game_platform_screen.dart';
 import 'package:flutter_learn/screens/menu/components/background.dart';
 
+import '../../game/main_game.dart';
 import 'components/custom_button_component.dart';
 import 'components/custom_text_component.dart';
 
