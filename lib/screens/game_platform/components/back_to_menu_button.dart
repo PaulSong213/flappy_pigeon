@@ -23,12 +23,6 @@ class BackToMenu extends SpriteComponent
   }
 
   @override
-  void render(Canvas canvas) {
-    super.render(canvas);
-    add(this);
-  }
-
-  @override
   void onTapDown(TapDownEvent event) {
     scale = Vector2.all(0.95);
   }

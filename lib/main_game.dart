@@ -1,4 +1,5 @@
 import 'package:flame/experimental.dart';
+import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter_learn/screens/game_platform/game_platform_screen.dart';
 import 'package:flutter_learn/screens/menu/menu_screen.dart';
@@ -8,6 +9,7 @@ class MainGame extends FlameGame with HasTappableComponents {
 
   @override
   Future<void>? onLoad() {
+    Flame.device.fullScreen();
     add(
       router = RouterComponent(
         initialRoute: 'menu',
