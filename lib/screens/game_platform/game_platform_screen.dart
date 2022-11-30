@@ -1,15 +1,19 @@
 import 'package:flame/components.dart';
+import 'package:flame/experimental.dart';
+import 'package:flutter/animation.dart';
 
+import '../../game/main_game.dart';
 import 'components/back_to_menu_button.dart';
 import 'components/character.dart';
 import 'components/game_platform_background.dart';
 
-class GamePlatformScreen extends Component {
+class GamePlatformScreen extends PositionComponent with TapCallbacks {
   static const String routeName = "game-platform";
-  late final SpriteAnimationComponent _character;
+  late final Character _character;
+  late final GamePlatformBackground _gamePlatformBackground;
   GamePlatformScreen() {
     addAll([
-      GamePlatformBackground(),
+      _gamePlatformBackground = GamePlatformBackground(),
       BackToMenu(),
       _character = Character(),
     ]);
@@ -17,7 +21,13 @@ class GamePlatformScreen extends Component {
 
   @override
   void onGameResize(Vector2 size) {
+    this.size = size;
     super.onGameResize(size);
-    _character.position = Vector2(10, (size.y / 2) - 40);
+  }
+
+  @override
+  void onTapDown(TapDownEvent event) {
+    _character.die();
+    _gamePlatformBackground.stop();
   }
 }

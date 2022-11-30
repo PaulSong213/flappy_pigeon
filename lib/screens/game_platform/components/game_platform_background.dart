@@ -27,4 +27,10 @@ class GamePlatformBackground extends ParallaxComponent {
     parallax?.baseVelocity = Vector2(100, 0);
     return super.onLoad();
   }
+
+  void stop() {
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      parallax?.baseVelocity = Vector2.zero();
+    });
+  }
 }
