@@ -1,6 +1,7 @@
 import 'package:flame/experimental.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
+import 'package:flutter_learn/screens/game_platform/components/enemy.dart';
 import 'package:flutter_learn/screens/game_platform/game_platform_screen.dart';
 import 'package:flutter_learn/screens/menu/menu_screen.dart';
 
@@ -18,6 +19,9 @@ class MainGame extends FlameGame with HasTappableComponents {
   @override
   Future<void>? onLoad() async {
     await Flame.images.loadAll(parallaxImagesFilename);
+    // Todo : make enemies file names static and load it here
+    await Flame.images.load('AngryPig/Run(36x30).png');
+    await Flame.images.load('Rino/Run(52x34).png');
     Flame.device.fullScreen();
     add(
       router = RouterComponent(
@@ -28,6 +32,5 @@ class MainGame extends FlameGame with HasTappableComponents {
         },
       ),
     );
-    return null;
   }
 }

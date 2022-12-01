@@ -1,8 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
-import 'package:flutter/animation.dart';
-
-import '../../game/main_game.dart';
+import 'package:flutter_learn/screens/game_platform/components/enemy.dart';
 import 'components/back_to_menu_button.dart';
 import 'components/character.dart';
 import 'components/game_platform_background.dart';
@@ -16,6 +14,8 @@ class GamePlatformScreen extends PositionComponent with TapCallbacks {
       _gamePlatformBackground = GamePlatformBackground(),
       BackToMenu(),
       _character = Character(),
+      Enemy(EnemyType.angryPig),
+      // Enemy(EnemyType.rino),
     ]);
   }
 
@@ -27,7 +27,6 @@ class GamePlatformScreen extends PositionComponent with TapCallbacks {
 
   @override
   void onTapDown(TapDownEvent event) {
-    _character.die();
-    _gamePlatformBackground.stop();
+    _character.jump();
   }
 }

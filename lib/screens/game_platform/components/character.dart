@@ -12,7 +12,9 @@ class Character extends SpriteAnimationComponent {
 
   double speedY = 0.0;
   double yMax = 0.0;
+  double characterAnimationStepTime = 0.1;
   final double GRAVITY = 2000;
+  //Todo: Fix character going to ground when screen height is small
   Character() {
     size = Vector2(characterWidth * 3, characterHeight * 3);
   }
@@ -31,7 +33,7 @@ class Character extends SpriteAnimationComponent {
         SpriteAnimationData.sequenced(
           amount: 6,
           textureSize: Vector2(characterWidth, characterHeight),
-          stepTime: 0.1,
+          stepTime: characterAnimationStepTime,
         ));
   }
 
@@ -51,13 +53,13 @@ class Character extends SpriteAnimationComponent {
     super.onGameResize(size);
     groundY = (size.y / 2) - 40.0;
     y = groundY;
-    x = 10;
+    x = 60;
     yMax = groundY;
   }
 
   void jump() {
     if (!isOnGround()) return;
-    speedY = -800;
+    speedY = -1000;
   }
 
   @override
