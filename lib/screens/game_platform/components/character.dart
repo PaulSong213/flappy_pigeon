@@ -1,7 +1,14 @@
+import 'dart:ui';
+
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter_learn/screens/game_platform/components/enemy.dart';
 
-class Character extends SpriteAnimationComponent {
+import '../../../game/constants.dart';
+
+class Character extends SpriteAnimationComponent with CollisionCallbacks {
   // * Get character sprite dimensions on on http://www.spritecow.com/
   final String characterFileName = "dog_Walk.png";
   final String characterDeathFileName = "dog_Death.png";
@@ -13,7 +20,10 @@ class Character extends SpriteAnimationComponent {
   double speedY = 0.0;
   double yMax = 0.0;
   double characterAnimationStepTime = 0.1;
-  final double GRAVITY = 2000;
+  final double gravity = 2000;
+  bool isAlive = true;
+
+  late RectangleHitbox hitbox;
   //Todo: Fix character going to ground when screen height is small
   Character() {
     size = Vector2(characterWidth * 3, characterHeight * 3);
@@ -24,6 +34,9 @@ class Character extends SpriteAnimationComponent {
     await Flame.images.load(characterFileName);
     await Flame.images.load(characterDeathFileName);
     run();
+    add(hitbox = RectangleHitbox()
+      ..paint = Constants.borderPaint
+      ..renderShape = true);
     return super.onLoad();
   }
 
@@ -38,6 +51,8 @@ class Character extends SpriteAnimationComponent {
   }
 
   void die() {
+    if (!isAlive) return;
+    isAlive = false;
     animation = SpriteAnimation.fromFrameData(
         Flame.images.fromCache(characterDeathFileName),
         SpriteAnimationData.variable(
@@ -53,7 +68,7 @@ class Character extends SpriteAnimationComponent {
     super.onGameResize(size);
     groundY = (size.y / 2) - 40.0;
     y = groundY;
-    x = 60;
+    x = 10;
     yMax = groundY;
   }
 
@@ -66,7 +81,7 @@ class Character extends SpriteAnimationComponent {
   void update(double dt) {
     super.update(dt);
     //final velocity = initial velocity + gravity
-    speedY += GRAVITY * dt;
+    speedY += gravity * dt;
 
     //distance = speed * time
     y += speedY * dt;
@@ -78,5 +93,16 @@ class Character extends SpriteAnimationComponent {
 
   bool isOnGround() {
     return (y >= yMax);
+  }
+
+  @override
+  void onCollisionStart(
+    Set<Vector2> intersectionPoints,
+    PositionComponent other,
+  ) {
+    super.onCollisionStart(intersectionPoints, other);
+    if (other is Enemy) {
+      die();
+    }
   }
 }

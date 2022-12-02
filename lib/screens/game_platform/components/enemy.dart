@@ -1,6 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
+import 'package:flutter_learn/game/main_game.dart';
+
+import '../../../game/constants.dart';
 
 enum EnemyType { angryPig, rino }
 
@@ -23,8 +27,7 @@ class Enemy extends SpriteAnimationComponent {
   double characterAnimationStepTime = 0.1;
   double speed = 350;
   double screenWidth = 0;
-
-  static const Map<EnemyType, EnemyData> _enemyDetails = {
+  static const Map<EnemyType, EnemyData> enemyDetails = {
     EnemyType.angryPig: EnemyData(
       'AngryPig/Run(36x30).png',
       36,
@@ -39,11 +42,19 @@ class Enemy extends SpriteAnimationComponent {
     ),
   };
   late EnemyData enemyData;
-  //Todo: Fix enemy going to ground when screen height is small
+  //TODO: Fix enemy going to ground when screen height is small
   Enemy(EnemyType enemyType) {
-    enemyData = _enemyDetails[enemyType]!;
+    enemyData = enemyDetails[enemyType]!;
     size = Vector2(enemyData.width * 2, enemyData.height * 2);
     run();
+  }
+
+  @override
+  Future<void>? onLoad() {
+    add(RectangleHitbox()
+      ..paint = Constants.borderPaint
+      ..renderShape = true);
+    return super.onLoad();
   }
 
   void run() {
@@ -69,7 +80,7 @@ class Enemy extends SpriteAnimationComponent {
     super.update(dt);
     x -= speed * dt;
     if (x < (-width)) {
-      x = screenWidth + 60;
+      parent?.remove(this);
     }
   }
 }
