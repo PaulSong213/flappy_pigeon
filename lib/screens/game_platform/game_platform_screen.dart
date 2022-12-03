@@ -1,9 +1,8 @@
 import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flutter_learn/game/main_game.dart';
-import 'package:flutter_learn/screens/game_platform/components/enemy.dart';
+import 'package:flutter_learn/screens/game_platform/components/pause_button.dart';
 import 'package:flutter_learn/screens/game_platform/components/enemy_manager.dart';
-import 'components/back_to_menu_button.dart';
 import 'components/character.dart';
 import 'components/game_platform_background.dart';
 import 'components/score_board.dart';
@@ -17,8 +16,8 @@ class GamePlatformScreen extends PositionComponent
   GamePlatformScreen() {
     addAll([
       _gamePlatformBackground = GamePlatformBackground(),
-      BackToMenu(),
-      _character = Character(),
+      PauseButton(),
+      _character = Character(_gamePlatformBackground),
       ScoreBoard(),
       _enemyManager = EnemyManager(),
     ]);
@@ -33,10 +32,5 @@ class GamePlatformScreen extends PositionComponent
   @override
   void onTapDown(TapDownEvent event) {
     _character.jump();
-  }
-
-  @override
-  void update(double dt) {
-    super.update(dt);
   }
 }

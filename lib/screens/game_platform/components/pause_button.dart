@@ -1,36 +1,36 @@
 import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/flame.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_learn/screens/menu/menu_screen.dart';
+import 'package:flutter_learn/overlays/menu/menu_overlay.dart';
+import 'package:flutter_learn/overlays/paused_menu/pause_menu_overlay.dart';
 
 import '../../../game/main_game.dart';
 
-class BackToMenu extends SpriteComponent
+class PauseButton extends SpriteComponent
     with TapCallbacks, HasGameRef<MainGame> {
-  final String backButtonFileName = 'back-arrow.png';
+  final String pauseButtonFileName = 'pause_btn.png';
 
   @override
   Future<void>? onLoad() async {
-    await Flame.images.load(backButtonFileName);
-    sprite = Sprite(Flame.images.fromCache(backButtonFileName));
+    await Flame.images.load(pauseButtonFileName);
+    sprite = Sprite(Flame.images.fromCache(pauseButtonFileName));
     return super.onLoad();
   }
 
-  BackToMenu() {
+  PauseButton() {
     size = Vector2(60, 60);
     position = Vector2(20, 40);
   }
 
   @override
   void onTapDown(TapDownEvent event) {
-    scale = Vector2.all(0.95);
+    scale = Vector2.all(0.90);
   }
 
   @override
   void onTapUp(TapUpEvent event) {
     scale = Vector2.all(1.0);
-    backToMenu();
+    pauseGame();
   }
 
   @override
@@ -38,7 +38,8 @@ class BackToMenu extends SpriteComponent
     scale = Vector2.all(1.0);
   }
 
-  void backToMenu() {
-    gameRef.router.pushNamed(MenuScreen.routeName);
+  void pauseGame() {
+    game.pauseEngine();
+    game.overlays.add(PausedMenuOverlay.routeName);
   }
 }

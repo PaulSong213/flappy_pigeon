@@ -3,7 +3,7 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter_learn/screens/game_platform/components/enemy.dart';
 import 'package:flutter_learn/screens/game_platform/game_platform_screen.dart';
-import 'package:flutter_learn/screens/menu/menu_screen.dart';
+import 'package:flutter_learn/overlays/menu/menu_overlay.dart';
 
 class MainGame extends FlameGame
     with HasTappableComponents, HasCollisionDetection {
@@ -27,9 +27,8 @@ class MainGame extends FlameGame
     Flame.device.fullScreen();
     add(
       router = RouterComponent(
-        initialRoute: 'menu',
+        initialRoute: GamePlatformScreen.routeName,
         routes: {
-          MenuScreen.routeName: Route(MenuScreen.new),
           GamePlatformScreen.routeName: Route(GamePlatformScreen.new),
         },
       ),
