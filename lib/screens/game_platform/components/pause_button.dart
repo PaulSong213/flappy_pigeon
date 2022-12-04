@@ -18,8 +18,9 @@ class PauseButton extends SpriteComponent
   }
 
   PauseButton() {
-    size = Vector2(60, 60);
-    position = Vector2(20, 40);
+    size = Vector2(40, 40);
+    position = Vector2(50, 50);
+    anchor = Anchor.center;
   }
 
   @override

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_learn/game/main_game.dart';
+import 'package:flutter_learn/screens/game_platform/game_platform_screen.dart';
 
-class PausedMenuOverlay extends StatelessWidget {
+import '../../screens/game_platform/components/score_board.dart';
+
+class GameOverOverlay extends StatelessWidget {
   // Reference to parent game.
   final MainGame game;
-  static const String routeName = 'PausedMenu';
-  const PausedMenuOverlay({super.key, required this.game});
+  static const String routeName = 'Gameover';
+  const GameOverOverlay({super.key, required this.game});
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +31,19 @@ class PausedMenuOverlay extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Paused',
+                  'Game Over',
                   style: TextStyle(
                     color: whiteTextColor,
                     fontSize: 34,
+                    fontFamily: 'fredoka_one',
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  'Your Score was ${ScoreBoard.score}',
+                  style: const TextStyle(
+                    color: whiteTextColor,
+                    fontSize: 28,
                     fontFamily: 'fredoka_one',
                   ),
                 ),
@@ -41,13 +53,14 @@ class PausedMenuOverlay extends StatelessWidget {
                   height: 90,
                   child: IconButton(
                     icon: const Icon(
-                      Icons.play_arrow_rounded,
+                      Icons.restart_alt_rounded,
                       color: Colors.white,
                       size: 90,
                     ),
                     onPressed: () {
-                      game.overlays.remove(PausedMenuOverlay.routeName);
                       game.resumeEngine();
+                      game.gamePlatformScreen.restartGame();
+                      game.overlays.remove(GameOverOverlay.routeName);
                     },
                   ),
                 ),

@@ -4,15 +4,18 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flutter/animation.dart';
+import 'package:flutter_learn/game/main_game.dart';
+import 'package:flutter_learn/overlays/gameover/gameover_overlay.dart';
 import 'package:flutter_learn/screens/game_platform/components/enemy.dart';
 import 'package:flutter_learn/screens/game_platform/components/game_platform_background.dart';
 
 import '../../../game/constants.dart';
 
-class Character extends SpriteAnimationComponent with CollisionCallbacks {
+class Character extends SpriteAnimationComponent
+    with CollisionCallbacks, HasGameRef<MainGame> {
   // * Get character sprite dimensions on on http://www.spritecow.com/
-  final String characterFileName = "dog_Walk.png";
-  final String characterDeathFileName = "dog_Death.png";
+  static final String characterFileName = "dog_Walk.png";
+  static final String characterDeathFileName = "dog_Death.png";
   final double characterWidth = 47;
   final double characterHeight = 47;
 
@@ -30,19 +33,14 @@ class Character extends SpriteAnimationComponent with CollisionCallbacks {
   }
 
   @override
-  Future<void>? onLoad() async {
-    await Flame.images.load(characterFileName);
-    await Flame.images.load(characterDeathFileName);
+  void onMount() {
     run();
-    add(
-      CircleHitbox()
-        ..renderShape = true
-        ..paint = Constants.borderPaint,
-    );
-    return super.onLoad();
+    add(CircleHitbox());
+    super.onMount();
   }
 
   void run() {
+    isAlive = true;
     animation = SpriteAnimation.fromFrameData(
         Flame.images.fromCache(characterFileName),
         SpriteAnimationData.sequenced(
@@ -63,6 +61,11 @@ class Character extends SpriteAnimationComponent with CollisionCallbacks {
           stepTimes: [0.3, 0.4, 0.5, 10],
           loop: false,
         ));
+    gamePlatformBackground.stop();
+    Future.delayed(const Duration(milliseconds: 1500), () {
+      game.pauseEngine();
+      game.overlays.add(GameOverOverlay.routeName);
+    });
   }
 
   @override
@@ -106,7 +109,6 @@ class Character extends SpriteAnimationComponent with CollisionCallbacks {
     super.onCollisionStart(intersectionPoints, other);
     if (other is Enemy) {
       die();
-      gamePlatformBackground.stop();
     }
   }
 }

@@ -51,11 +51,7 @@ class Enemy extends SpriteAnimationComponent {
 
   @override
   Future<void>? onLoad() {
-    add(
-      CircleHitbox()
-        ..paint = Constants.borderPaint
-        ..renderShape = true,
-    );
+    add(CircleHitbox());
     return super.onLoad();
   }
 

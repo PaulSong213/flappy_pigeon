@@ -8,7 +8,7 @@ class ScoreBoard extends TextComponent {
     anchor = Anchor.center;
     textRenderer = TextPaint(
       style: const TextStyle(
-        fontSize: 30,
+        fontSize: 40,
         fontWeight: FontWeight.w800,
         fontFamily: 'fredoka_one',
       ),

@@ -16,9 +16,21 @@ class EnemyManager extends Component {
   EnemyManager() {
     _random = Random();
     _spawnLevel = 0;
-    _timer = Timer(4, repeat: true, onTick: () {
+    _timer = Timer(2, repeat: true, onTick: () {
       spawnRandomEnemy();
     });
+  }
+
+  void reset() {
+    _timer.stop();
+    _spawnLevel = 0;
+    _spawnLevel = 0;
+    _timer.reset();
+    var newWaitTime = (4 / (1 + (0.1 * _spawnLevel)));
+    _timer = Timer(newWaitTime, repeat: true, onTick: () {
+      spawnRandomEnemy();
+    });
+    _timer.start();
   }
 
   @override
@@ -36,9 +48,6 @@ class EnemyManager extends Component {
       _timer.start();
     }
   }
-
-  @override
-  void render(Canvas canvas) {}
 
   void spawnRandomEnemy() {
     final randomNumber = _random.nextInt(EnemyType.values.length);

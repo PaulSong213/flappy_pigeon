@@ -22,9 +22,8 @@ class GamePlatformBackground extends ParallaxComponent {
         ));
     parallax = Parallax(
       await Future.wait(layers),
-      baseVelocity: Vector2(50, 0),
+      baseVelocity: Vector2(100, 0),
     );
-    parallax?.baseVelocity = Vector2(100, 0);
     return super.onLoad();
   }
 
@@ -32,5 +31,9 @@ class GamePlatformBackground extends ParallaxComponent {
     Future.delayed(const Duration(milliseconds: 1000), () {
       parallax?.baseVelocity = Vector2.zero();
     });
+  }
+
+  void resume() {
+    parallax?.baseVelocity = Vector2(100, 0);
   }
 }
